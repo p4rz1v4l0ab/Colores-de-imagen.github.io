@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+}
+
+h1 {
+    color: #007bff;
+    margin-bottom: 25px;
+}
+
+.options {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* Para el label */
+    display: inline-block; /* Para que el label se comporte como botón */
+}
+
+.button:hover {
+    background-color: #218838;
+}
+
+/* Ocultar el input de tipo file por defecto */
+input[type="file"] {
+    display: none;
+}
+
+.image-display {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafa;
+}
+
+.image-display h2 {
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+#selected-image {
+    max-width: 100%;
+    max-height: 300px; /* Limita la altura de la imagen */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+#no-image-message {
+    color: #666;
+    font-style: italic;
+}
+
+

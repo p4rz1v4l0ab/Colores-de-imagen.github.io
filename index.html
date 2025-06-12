@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Colores de Imagen</title>
+    <link rel="stylesheet" href="stiles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Análisis de Colores de Imagen</h1>
+
+        <div class="upload-section">
+            <label for="image-upload" class="button upload-button">
+                Subir Imagen para Analizar
+                <input type="file" id="image-upload" accept="image/*">
+            </label>
+        </div>
+
+        <div class="image-display-area">
+            <p id="instruction-message">Sube una imagen para ver su paleta de colores.</p>
+            <img id="uploaded-image" src="#" alt="Imagen subida" class="hidden">
+            <canvas id="color-analysis-canvas" class="hidden"></canvas>
+        </div>
+
+        <div class="color-results hidden" id="color-results-container">
+            <h2>Colores Predominantes</h2>
+            <div id="color-palette" class="color-palette">
+                </div>
+            <p class="note">Mostrando hasta los 10 colores más predominantes.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

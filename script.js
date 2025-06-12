@@ -14,26 +14,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función principal para analizar los colores
     function analyzeColors(img) {
-        // Asegurarse de que el canvas tenga el tamaño de la imagen para un análisis completo
-        colorAnalysisCanvas.width = img.width;
-        colorAnalysisCanvas.height = img.height;
+        // Ocultar la imagen <img> y mostrar el canvas
+        uploadedImage.classList.add('hidden');
+        colorAnalysisCanvas.classList.remove('hidden');
 
-        // Dibujar la imagen en el canvas
-        ctx.drawImage(img, 0, 0, img.width, img.height);
+        // Calcular el tamaño máximo del canvas basado en el contenedor
+        // Esto asegura que el canvas no se desborde del área de visualización
+        const maxCanvasWidth = colorAnalysisCanvas.parentElement.clientWidth - 40; // Resta el padding del contenedor
+        const maxCanvasHeight = 500; // Un alto máximo razonable para el canvas
+
+        // Redimensionar el canvas para que la imagen quepa bien sin distorsión
+        // y sin ser demasiado grande para la pantalla
+        let aspectRatio = img.width / img.height;
+        let newWidth = maxCanvasWidth;
+        let newHeight = newWidth / aspectRatio;
+
+        if (newHeight > maxCanvasHeight) {
+            newHeight = maxCanvasHeight;
+            newWidth = newHeight * aspectRatio;
+        }
+
+        // Asegurarse de que el canvas no exceda el tamaño original de la imagen si es pequeña
+        if (newWidth > img.width) newWidth = img.width;
+        if (newHeight > img.height) newHeight = img.height;
+
+
+        colorAnalysisCanvas.width = newWidth;
+        colorAnalysisCanvas.height = newHeight;
+
+        // Dibujar la imagen en el canvas, escalándola al nuevo tamaño del canvas
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
         // Obtener los datos de los píxeles
-        const imageData = ctx.getImageData(0, 0, img.width, img.height).data;
+        const imageData = ctx.getImageData(0, 0, newWidth, newHeight).data;
         const colorCounts = {}; // Objeto para almacenar la frecuencia de cada color RGB
 
         // Iterar sobre los píxeles (cada 4 valores son R, G, B, A)
-        // Optimizamos saltando píxeles para imágenes muy grandes
-        const pixelStep = 4; // Analizar cada 4º píxel en cada fila, para no saturar con imágenes grandes
-                           // Puedes ajustar este valor: 1 para más precisión, mayor para más velocidad
+        // Optimizamos saltando píxeles para imágenes muy grandes.
+        // El pixelStep se puede ajustar. Un valor de 1 analizará cada píxel.
+        // Un valor mayor reducirá la precisión pero aumentará el rendimiento.
+        const pixelStep = 4; // Analizar cada 4º píxel (salto de 4x4 en el grid)
+
         for (let i = 0; i < imageData.length; i += 4 * pixelStep) {
             const r = imageData[i];
             const g = imageData[i + 1];
             const b = imageData[i + 2];
-            // const a = imageData[i + 3]; // Canal alfa, si fuera necesario
+            // Si el píxel es completamente transparente o casi transparente, podemos ignorarlo
+            // const a = imageData[i + 3];
+            // if (a < 50) continue; // Por ejemplo, ignorar píxeles con alfa muy bajo
 
             // Crear una clave única para el color RGB
             const rgbKey = `${r},${g},${b}`;
@@ -78,16 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
     imageUpload.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file) {
+            instructionMessage.classList.add('hidden'); // Ocultar mensaje inicial
             const reader = new FileReader();
             reader.onload = (e) => {
                 const img = new Image();
                 img.onload = () => {
-                    // Ocultar mensaje de instrucción y mostrar imagen cargada
-                    instructionMessage.classList.add('hidden');
-                    uploadedImage.src = e.target.result;
-                    uploadedImage.classList.remove('hidden');
-
-                    // Realizar el análisis de colores
                     analyzeColors(img);
                 };
                 img.src = e.target.result;
@@ -96,11 +119,15 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // Si no se selecciona ningún archivo, restablecer la vista
             instructionMessage.classList.remove('hidden');
-            uploadedImage.classList.add('hidden');
+            uploadedImage.classList.add('hidden'); // Asegurarse de que img esté oculta
+            colorAnalysisCanvas.classList.add('hidden'); // Asegurarse de que canvas esté oculto
             colorResultsContainer.classList.add('hidden');
             colorPalette.innerHTML = '';
         }
     });
+
+    // Ocultar el canvas y la imagen al inicio, mostrar el mensaje
+    uploadedImage.classList.add('hidden');
+    colorAnalysisCanvas.classList.add('hidden');
+    instructionMessage.classList.remove('hidden');
 });
-
-

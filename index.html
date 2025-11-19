@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> <title>Network Management | Tu Columna Vertebral Digital</title>
+    <meta name="description" content="Gestión profesional de redes sociales, publicidad digital, páginas web y soporte 24/7 con seguridad e innovación.">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0d1a;
+            --primary: #00ffff;
+            --secondary: #ff00ff;
+            --text: #e0e0ff;
+            --card: rgba(20, 20, 50, 0.7);
+            --border: rgba(0, 255, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Exo 2', sans-serif;
+            line-height: 1.7;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 255, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.08) 0%, transparent 20%),
+                #0d0d1a;
+            overflow-x: hidden;
+        }
+
+        /* ==== MENÚ FIJO ==== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 20, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .menu {
+            display: flex;
+            gap: 40px;
+        }
+
+        .menu a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.4s ease;
+        }
+
+        .menu a:hover {
+            color: var(--primary);
+        }
+
+        .menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Para que el contenido no quede debajo del menú fijo */
+        body { padding-top: 90px; }
+
+        /* Responsive menú móvil */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(10, 10, 20, 0.98);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 60px;
+                transition: left 0.4s ease;
+            }
+
+            .menu.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* ==== RESTO DE TU ESTILO (sin cambios) ==== */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            background: linear-gradient(135deg, #14142b 0%, #0a0a14 100%);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1639325649007-352b9ea7f035?ixlib=rb-4.0.3&auto=format&fit=crop&q=80') center/cover no-repeat;
+            opacity: 0.15;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.8rem, 9vw, 6rem);
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(0,255,255,0.5);
+        }
+
+        .subtitle {
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            font-weight: 300;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+
+        .hero-text {
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            max-width: 90%;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 100px 0; }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.3rem, 7vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 25px auto 0;
+            border-radius: 2px;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 40px 25px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,255,0.15), transparent);
+            transition: 0.8s;
+        }
+
+        .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(0, 255, 255, 0.25);
+            border-color: var(--primary);
+        }
+
+        .card:hover::before { left: 100%; }
+
+        .card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary);
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: 35px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 80px 20px;
+            background: #0a0a14;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 480px) {
+            section { padding: 80px 0; }
+            .card { padding: 35px 20px; }
+            h1 { letter-spacing: 2px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">NETWORK MANAGEMENT</div>
+            <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+            <div class="menu" id="menu">
+                <a href="index.html">Inicio</a>
+                <a href="servicios.html">Servicios</a>
+                <a href="#contacto">Contactos</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Para que el ancla #inicio no quede tapada por el menú fijo -->
+    <div id="inicio"></div>
+
+    <header>
+        <div class="hero-content">
+            <h1>NETWORK MANAGEMENT</h1>
+            <div class="subtitle">La columna vertebral de tu negocio</div>
+            <p class="hero-text">
+                En Network Management nos comprometemos a ser el núcleo tecnológico de tu organización. 
+                Mejoramos tu presencia digital, fortalecemos la comunicación con estrategias personalizadas 
+                y te hacemos destacar en un mercado cada vez más competitivo.
+            </p>
+        </div>
+    </header>
+
+    <section id="mision-vision">
+        <div class="container">
+            <h2>Misión, Visión y Valores</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Misión</h3>
+                    <p>Ayudar a los negocios a optimizar su presencia en redes sociales mediante contenido de calidad y publicidad efectiva, atrayendo más clientes y generando resultados reales.</p>
+                </div>
+                <div class="card">
+                    <h3>Visión</h3>
+                    <p>Ser la microempresa líder en gestión de redes sociales con estrategias innovadoras y creativas que impulsen el crecimiento digital de nuestros clientes.</p>
+                </div>
+                <div class="card">
+                    <h3>Valores</h3>
+                    <p>
+                        <strong>Compromiso</strong> → Cumplimos lo prometido.<br><br>
+                        <strong>Calidad</strong> → Páginas y redes seguras y funcionales.<br><br>
+                        <strong>Innovación</strong> → Creatividad y mejora constante.<br><br>
+                        <strong>Confianza</strong> → Transparencia total con nuestros clientes.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aquí puedes crear la sección de servicios -->
+    <section id="servicios" style="background: linear-gradient(135deg, #14142b, #0a0a14);">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="grid">
+                <!-- Agrega aquí tus tarjetas de servicios -->
+                <div class="card">
+                    <h3>Gestión de Redes Sociales</h3>
+                    <p>Contenido diario, interacción y crecimiento orgánico.</p>
+                </div>
+                <div class="card">
+                    <h3>Publicidad Digital</h3>
+                    <p>Campañas en Meta, Google Ads, TikTok Ads, etc.</p>
+                </div>
+                <div class="card">
+                    <h3>Diseño Web</h3>
+                    <p>Páginas modernas, rápidas y optimizadas para móviles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de contacto (puedes ampliarla después) -->
+    <section id="contacto">
+        <div class="container">
+            <h2>Contactos</h2>
+            <p style="text-align:center; font-size:1.3rem;">
+                WhatsApp: <a href="https://wa.me/1234567890" style="color:var(--primary);">56 5135 4600</a><br>
+                Email: <a href="mailto:network@gmail.com" style="color:var(--primary);">network@gmail.com</a>
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p><strong>Network Management</strong> © 2025 • Tu crecimiento digital empieza aquí.</p>
+    </footer>
+
+    <!-- Script sencillo para menú móvil -->
+    <script>
+        const toggle = document.querySelector('.menu-toggle');
+        const menu = document.getElementById('menu');
+
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+    </script>
+
+</body>
+</html>

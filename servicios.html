@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetworkPro | Infraestructura TI Empresarial</title>
+    <meta name="description" content="Diseño, instalación y mantenimiento de redes empresariales. Soluciones escalables, seguras y de alto rendimiento.">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0d1a;
+            --primary: #00ffff;
+            --secondary: #ff00ff;
+            --text: #e0e0ff;
+            --card: rgba(20, 20, 50, 0.7);
+            --border: rgba(0, 255, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Exo 2', sans-serif;
+            line-height: 1.7;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 255, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.08) 0%, transparent 20%),
+                #0d0d1a;
+            overflow-x: hidden;
+            padding-top: 90px;
+        }
+
+        /* Menú fijo (igual que antes) */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background: rgba(10, 10, 20, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .menu {
+            display: flex;
+            gap: 40px;
+        }
+
+        .menu a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.4s ease;
+        }
+
+        .menu a:hover { color: var(--primary); }
+        .menu a:hover::after { width: 100%; }
+
+        .menu-toggle { display: none; background: none; border: none; color: var(--primary); font-size: 1.8rem; cursor: pointer; }
+
+        @media (max-width: 768px) {
+            .menu {
+                position: fixed;
+                top: 70px; left: -100%;
+                width: 100%; height: calc(100vh - 70px);
+                background: rgba(10, 10, 20, 0.98);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 60px;
+                transition: left 0.4s ease;
+            }
+            .menu.active { left: 0; }
+            .menu-toggle { display: block; }
+        }
+
+        /* Estilos generales (mismo look & feel) */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            background: linear-gradient(135deg, #14142b 0%, #0a0a14 100%);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&q=80') center/cover no-repeat;
+            opacity: 0.2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(0,255,255,0.5);
+        }
+
+        .subtitle {
+            font-size: clamp(1.6rem, 5vw, 2.5rem);
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 120px 0; }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 4rem);
+            text-align: center;
+            margin-bottom: 70px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 140px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 25px auto 0;
+            border-radius: 2px;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+            gap: 40px;
+        }
+
+        .card {
+            background: var(--card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 45px 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,255,0.15), transparent);
+            transition: 0.8s;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(0, 255, 255, 0.3);
+            border-color: var(--primary);
+        }
+
+        .card:hover::before { left: 100%; }
+
+        .card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 100px 20px;
+            background: #0a0a14;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menú -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">NETWORKPRO</div>
+            <button class="menu-toggle" aria-label="Menú">☰</button>
+            <div class="menu" id="menu">
+                <a href="index.html">Inicio</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="inicio"></div>
+
+    <!-- Hero -->
+    <header>
+        <div class="hero-content">
+            <h1>NETWORKPRO</h1>
+            <div class="subtitle">Infraestructura TI que no falla</div>
+            <p style="font-size:1.3rem; max-width:900px; margin:30px auto 0; opacity:0.9;">
+                Desde la instalación hasta el mantenimiento avanzado: redes empresariales seguras, escalables y de alto rendimiento.
+            </p>
+        </div>
+    </header>
+
+    <!-- Servicios -->
+    <section id="servicios">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="grid">
+
+                <div class="card">
+                    <h3>Diseño e Instalación de Infraestructura</h3>
+                    <p>Planificamos y construimos redes personalizadas adaptadas a las necesidades específicas de tu empresa, utilizando equipamiento de categoría empresarial y mejores prácticas de la industria.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Mantenimiento Preventivo y Correctivo</h3>
+                    <p>Actualizaciones regulares, auditorías de seguridad, parches de software y respuesta inmediata ante fallos, asegurando que tu infraestructura siempre esté en condiciones óptimas.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Monitoreo y Gestión Proactiva</h3>
+                    <p>Supervisión continua de tu red en tiempo real, identificando problemas potenciales antes de que afecten tu operación y garantizando rendimiento óptimo permanente.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Consultoría Estratégica y Escalabilidad</h3>
+                    <p>Asesoramiento experto para adaptar tu infraestructura al crecimiento empresarial, implementando soluciones que se expanden con tu negocio sin comprometer calidad ni seguridad.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto rápido -->
+    <section id="contacto" style="background: linear-gradient(135deg, #14142b, #0a0a14);">
+        <div class="container" style="text-align:center;">
+            <h2>¿Listo para una red sin límites?</h2>
+            <p style="font-size:1.4rem; margin:40px 0;">
+                Contáctanos y recibe una auditoría gratuita de tu infraestructura actual.
+            </p>
+            <p style="font-size:1.5rem;">
+                WhatsApp: <a href="https://wa.me/5651354600" style="color:var(--primary); text-decoration:none;">56 5135 4600</a><br><br>
+                Email: <a href="network@gmail.com" style="color:var(--primary); text-decoration:none;">network@gmail.com</a>
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p><strong>NetworkPro</strong> © 2025 • Infraestructura que impulsa tu empresa</p>
+    </footer>
+
+    <!-- Script menú móvil -->
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', () => {
+            document.getElementById('menu').classList.toggle('active');
+        });
+    </script>
+
+</body>
+</html>
